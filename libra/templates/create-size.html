@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="d-flex align-items-center row justify-content-center"> 
+    <h1 class="text-center display-4">Let's get started!</h1>
+    <div class="card col col-5">
+        <img src="{{ url_for('static', filename='grid-icon.png') }}" class="card-img-top p-2" alt="remember">
+        <div class="card-body">
+            <h5 class="card-title">Board Size<h5>
+            <h6 class="card-subtitle mb-2 text-muted">Big or small?</h6>
+            <p class="card-text">
+                Choose whether your board will be 2x2, 3x3, 4x4, or even bigger.
+            </p>
+            <p>
+                A large board leads to endless possibilities - but be prepared to wait longer for your opponent to train.
+            </p>
+        </div>
+    </div>
+
+    <div class="col col-7">
+        <form class="form form-horizontal border p-5" method="POST" action="">
+            <div class="mb-3">
+                <label class="form-label"> Enter the board size </label>
+                <input type="number" min="2" max="20" name="size" class="form-control">
+                <div class="form-text"> We recommend sizes from 2x2 upto 7x7, but you can go even further.</div>
+            </div>
+            <input type="submit" value="Next" class="btn btn-primary">
+        </form>
+    </div>
+</div>
+
+{% endblock %}

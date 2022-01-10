@@ -3,7 +3,7 @@
 
 <div class="text-center mb-5">
     <img src="{{ url_for('static', filename='lock-icon.jpg') }}" class="img-responsive mb-3" width="50" height="50" alt="lock"/>
-    <h1> Sign In </h1>
+    <h1 class="display-4"> Sign In </h1>
 </div>
 
 <form class="form form-horizontal border mx-5 p-5" method="POST" action="">
@@ -19,7 +19,7 @@
     <div class="mb-3">
         {{ form.submit(class="btn btn-primary") }}
     </div>
-    <p class="form-text">Don't have an account? <a href="{{ url_for('register') }}">Sign un!</a></p>
+    <p class="form-text">Don't have an account? <a href="{{ url_for('register') }}">Sign up!</a></p>
 </form>
 
 {% endblock %}
