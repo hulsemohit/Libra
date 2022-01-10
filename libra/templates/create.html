@@ -1,6 +1,112 @@
-{% extends "base.html" %} {% block content %}
+{% extends "base.html" %}
+
+{% block head %}
+ <script>
+            var AllPatterns = [];
+            const SelectedButtons = [];
+            var boardSize = 1;
+            function myFunction(size) {
+                let text = "<div class='container'>";
+                boardSize = size;
+
+                for (j = 0; j < size; j++) {
+                    text += "<div class='row' style='margin:0%;'>";
+                    for (i = 0; i < size; i++) {
+                        var index = j * size + i;
+                        text += "<div class='col' id='board' style='margin:0%;'>";
+                        text +=
+                            "<button type='button' onclick='ButtonClick(this.id)' class='btn btn-link' id=" +
+                            index +
+                            "></button>";
+                        text += "</div>";
+                        SelectedButtons[index] = 0;
+                    }
+                    text += "</div>";
+                }
+
+                text += "</div>";
+                text += "<br>";
+                text +=
+                    "<button  type='button'  onclick='OnAdd()' class='right'>Add Shape</button>";
+                text +=
+                    "<button  type='button'  onclick='OnSubmit()' class='right'>Submit and Train</button>";
+                return text;
+            }
+
+            function ButtonClick(buttonid) {
+                SelectedButtons[buttonid] = 1 - SelectedButtons[buttonid];
+                if (SelectedButtons[buttonid])
+                    document.getElementById(buttonid).style.backgroundColor = "Red";
+                else document.getElementById(buttonid).style.backgroundColor = "";
+            }
+
+            function OnSubmit() {
+                if (AllPatterns.length === 0) return;
+                var url = "/train?size=" + boardSize + "&" + "array=";
+                for (const x of AllPatterns) url += x;
+                window.location.href = url;
+                document.body.innerHTML =
+                    "<img src='https://c.tenor.com/I6kN-6X7nhAAAAAj/loading-buffering.gif'/>";
+            }
+
+            function OnAdd() {
+                AllPatterns = AllPatterns.concat(SelectedButtons);
+                for (i = 0; i < boardSize * boardSize; i++)
+                    if (SelectedButtons[i]) ButtonClick(i);
+            }
+        </script>
+
+<style>
+#board button {
+    width: 100px;
+    height: 100px;
+    background-color: #ffffa7;
+    border-color: darkturquoise;
+    border-width: 1px;
+    border-style: solid;
+    padding: 1%;
+    min-width: 1px;
+    min-height: 1px;
+    font-size: 300%;
+
+    /* min-width: 10px;
+  min-height: 10px; */
+    /* max-width: 100px;
+  max-height: 100px; */
+}
+
+#board {
+    /* max-width: 50px; */
+    max-height: 100px;
+    max-width: 100px;
+    min-width: 1px;
+    min-height: 1px;
+    padding: 1%;
+}
+
+#instructions {
+    display: flex;
+    flex-wrap: wrap;
+    max-width: 100px;
+    /* max-height: 600px; */
+    min-width: 100px;
+}
+
+p {
+    margin-bottom: 10px;
+}
+input.right {
+    float: right;
+}
+</style>
+
+{% endblock %}
+
+{% block content %}
+
 <div id="box"></div>
 <script>
     document.getElementById("box").innerHTML = myFunction({{value}});
 </script>
+
 {% endblock %}

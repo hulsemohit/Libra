@@ -1,4 +1,55 @@
-{% extends "base.html" %} {% block content %}
+{% extends "base.html" %}
+
+{% block head %}
+
+<style>
+#board button {
+    width: 100px;
+    height: 100px;
+    background-color: #ffffa7;
+    border-color: darkturquoise;
+    border-width: 1px;
+    border-style: solid;
+    padding: 1%;
+    min-width: 1px;
+    min-height: 1px;
+    font-size: 300%;
+
+    /* min-width: 10px;
+  min-height: 10px; */
+    /* max-width: 100px;
+  max-height: 100px; */
+}
+
+#board {
+    /* max-width: 50px; */
+    max-height: 100px;
+    max-width: 100px;
+    min-width: 1px;
+    min-height: 1px;
+    padding: 1%;
+}
+
+#instructions {
+    display: flex;
+    flex-wrap: wrap;
+    max-width: 100px;
+    /* max-height: 600px; */
+    min-width: 100px;
+}
+
+p {
+    margin-bottom: 10px;
+}
+input.right {
+    float: right;
+}
+</style>
+
+{% endblock %}
+
+{% block content %}
+
 <form action="" method="POST">
     <div class="container">
         {% for i in range(size) %}
@@ -34,4 +85,5 @@
     <h3>Winner: {{ winner }}</h3>
     {% endif %}
 </form>
+
 {% endblock %}
