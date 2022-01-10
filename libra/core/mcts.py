@@ -2,9 +2,9 @@ import random
 
 import numpy as np
 
-from neuralnetwork import NeuralNet
-from state import State
-import utils
+from libra.core.neuralnetwork import NeuralNet
+from libra.core.state import State
+from libra.core import utils
 
 
 class MCTS:

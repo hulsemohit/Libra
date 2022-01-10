@@ -1,0 +1,37 @@
+{% extends "base.html" %} {% block content %}
+<form action="" method="POST">
+    <div class="container">
+        {% for i in range(size) %}
+        <div class="row" style="margin: 0%">
+            {% for j in range(size) %}
+            <div class="col" id="board" style="margin: 0%">
+                <button
+                    type="submit"
+                    class="btn btn-link"
+                    name="choice"
+                    value="{{ i * size + j }}"
+                    {%
+                    if
+                    board[i,
+                    j]
+                    or
+                    winner is not none
+                    %}
+                    disabled
+                    {%
+                    endif
+                    %}
+                >
+                    {% if board[i, j] > 0 %} X {% endif %} {% if board[i, j] < 0 %} O
+                    {%endif%}
+                </button>
+            </div>
+            {% endfor %}
+        </div>
+        {% endfor %}
+    </div>
+    {% if winner is not none %}
+    <h3>Winner: {{ winner }}</h3>
+    {% endif %}
+</form>
+{% endblock %}

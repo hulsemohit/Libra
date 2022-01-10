@@ -3,14 +3,20 @@ from typing import List, Tuple, Dict
 
 import numpy as np
 
-from mcts import MCTS
-from neuralnetwork import NeuralNet
-from state import State
-import utils
+from libra.core.mcts import MCTS
+from libra.core.neuralnetwork import NeuralNet
+from libra.core.state import State
+from libra.core import utils
 
 
 def train(nnet: NeuralNet, start_state: State, args: Dict) -> NeuralNet:
     examples = []
+
+    class RandomPlayer:
+        def predict_moves(self, state: State):
+            pis = state.moves().astype(float)
+            return pis / np.sum(pis)
+
     for i in range(args["iters"]):
         utils.info(f"Iteration {i + 1}/{args['iters']}")
 
@@ -37,9 +43,10 @@ def train(nnet: NeuralNet, start_state: State, args: Dict) -> NeuralNet:
         else:
             utils.info(f"Rejecting new model (win-rate {win_rate})")
 
+        utils.info("Testing new model against a random player.")
         random_rate = test(
             MCTS(nnet, args["simulations"]),
-            MCTS(NeuralNet(start_state.size), args["simulations"]),
+            RandomPlayer(),
             start_state,
             args["matches"],
         )
@@ -89,7 +96,7 @@ def symmetries(
     return results
 
 
-def test(player1: MCTS, player2: MCTS, start: State, matches: int) -> float:
+def test(player1: MCTS, player2, start: State, matches: int) -> float:
     score = 0.5 * matches
     mcts = [player1, player2]
     for i in range(matches):
@@ -99,13 +106,12 @@ def test(player1: MCTS, player2: MCTS, start: State, matches: int) -> float:
             utils.debug(f"Player: {current}. {state.__str__(current)}")
             res = state.result()
             if res is not None:
-                res = current * res * (-1) ** i
+                res = current * res
                 utils.info(f"Match {i + 1}/{matches} result: {res}")
-                score += current * res * 0.5
+                score += res * 0.5
                 break
             move_pi = mcts[current].predict_moves(state)
             state = state.move(np.random.choice(range(len(move_pi)), p=move_pi))
             current *= -1
-        mcts = [player2, player1]
 
     return score / matches

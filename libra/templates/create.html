@@ -1,0 +1,6 @@
+{% extends "base.html" %} {% block content %}
+<div id="box"></div>
+<script>
+    document.getElementById("box").innerHTML = myFunction({{value}});
+</script>
+{% endblock %}

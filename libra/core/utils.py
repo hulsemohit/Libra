@@ -3,7 +3,7 @@ import datetime
 import sys
 
 LOGFILE = sys.stderr
-LOGLEVEL = 2
+LOGLEVEL = 3
 
 
 def debug(message: str):
