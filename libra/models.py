@@ -22,10 +22,10 @@ class User(db.Model, UserMixin):
 
 class UserGame(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    shapes_path = db.Column(db.String(50), unique=True, nullable=False)
-    model_path = db.Column(db.String(50), unique=True, nullable=False)
-    date_posted = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
+    size = db.Column(db.Integer, nullable=False)
+    path = db.Column(db.String(50), unique=True, nullable=False)
+    date_posted = db.Column(db.DateTime, nullable=False, default=datetime.now)
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)
 
     def __repr__(self):
-        return f"Game('{self.shapes_path}', '{self.date_posted}')"
+        return f"Game('{self.path}', '{self.date_posted}', '{self.user_id}')"

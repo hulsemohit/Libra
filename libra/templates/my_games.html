@@ -1,0 +1,20 @@
+{% extends "base.html" %} {% block content %}
+    <table>
+        <thead>
+            <tr>
+                <th> Created </th>
+                <th> Size </th>
+                <th></th>
+                </tr>
+        </thead>
+        <tbody>
+            {% for g in game_list %}
+            <tr>
+                <td>{{ g.date_posted }}</td>
+                <td>{{ g.size }}x{{ g.size }}</td>
+                <td><a href=/replay?id={{ g.id }}>Play</a></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
