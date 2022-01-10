@@ -1,37 +1,64 @@
-{% extends "base.html" %} {% block content %}
-<form action="" method="POST">
-    <div class="container">
-        {% for i in range(size) %}
-        <div class="row" style="margin: 0%">
-            {% for j in range(size) %}
-            <div class="col" id="board" style="margin: 0%">
-                <button
-                    type="submit"
-                    class="btn btn-link"
-                    name="choice"
-                    value="{{ i * size + j }}"
-                    {%
-                    if
-                    board[i,
-                    j]
-                    or
-                    winner is not none
-                    %}
-                    disabled
-                    {%
-                    endif
-                    %}
-                >
-                    {% if board[i, j] > 0 %} X {% endif %} {% if board[i, j] < 0 %} O
-                    {%endif%}
-                </button>
-            </div>
-            {% endfor %}
-        </div>
-        {% endfor %}
-    </div>
-    {% if winner is not none %}
-    <h3>Winner: {{ winner }}</h3>
+{% extends "base.html" %}
+
+{% block head %}
+
+<style>
+    .grid-btn {
+        width: {{ 350 // size }}px;
+        height: {{ 350 // size }}px;
+    }
+</style>
+
+{% endblock %}
+
+{% block content %}
+
+<h1 class="text-center display-4">Action!</h1>
+
+<div class="d-flex justify-content-center mb-2">
+    <form action="" method="POST">
+        <table>
+            <tbody>
+                {% for i in range(size) %}
+                    <tr>
+                        {% for j in range(size) %}
+                            <td>
+                                <button
+                                    type="submit"
+                                    class="btn grid-btn btn-success align-middle fs-2"
+                                    name="choice"
+                                    value="{{ i * size + j }}"
+                                    {% if board[i, j] or winner is not none %} disabled {% endif %}
+                                >
+                                    {% if board[i, j] > 0 %} &#x2717; {% endif %}
+                                    {% if board[i, j] < 0 %} &#x25CF; {% endif %}
+                                </button>
+                            </td>
+                        {% endfor %}
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </form>
+</div>
+
+<p class="text-center">Computer: &#x2717; | You: &#x25CF; </p>
+
+{% if winner is not none %}
+
+<h2 class="text-center mt-5">
+    {% if winner > 0 %}
+        Computer (&#x2717;) Wins!
+    {% elif winner < 0 %}
+        You (&#x25CF); Win!
+    {% else %}
+        Game Drawn.
     {% endif %}
-</form>
+</h2>
+<div class="d-flex justify-content-center m-3">
+    <a class="btn btn-primary" href="{{ url_for('games') }}">Play another game</a>
+</div>
+
+{% endif %}
+
 {% endblock %}

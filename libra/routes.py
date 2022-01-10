@@ -5,7 +5,6 @@ import string
 
 from flask import Flask, request, render_template, redirect, flash, url_for
 from flask_login import login_user, current_user, logout_user, login_required
-from werkzeug.local import LocalProxy
 import numpy as np
 
 from libra.models import User, UserGame
@@ -16,6 +15,14 @@ from libra.core import utils
 from libra.core.game import Game
 
 
+CURRENT_GAME = {}
+
+
+@app.route("/favicon.ico")
+def favicon():
+    return app.send_static_file("favicon.ico")
+
+
 @app.route("/")
 @app.route("/home")
 def home():
@@ -24,7 +31,6 @@ def home():
 
 @app.route("/register", methods=["GET", "POST"])
 def register():
-    LocalProxy
     if current_user.is_authenticated:
         return redirect(url_for("home"))
 
@@ -53,7 +59,9 @@ def login():
             login_user(user)
             next_page = request.args.get("next", "home")
             return redirect(next_page)
-        flash("Failed to Sign In.")
+        flash(
+            "Failed to sign in. Please check your credentials and try again.", "warning"
+        )
     return render_template("login.html", form=form)
 
 
@@ -63,54 +71,12 @@ def logout():
     return redirect(url_for("home"))
 
 
-@app.route("/games")
-@login_required
-def games():
-    user_games = UserGame.query.filter_by(user_id=current_user.get_id()).all()
-    return render_template("my_games.html", game_list=user_games)
-
-
-TTT_WINNING_SHAPES = list(
-    map(
-        np.array,
-        [
-            [
-                [1, 1, 1],
-            ],
-            [
-                [1],
-                [1],
-                [1],
-            ],
-            [
-                [1, 0, 0],
-                [0, 1, 0],
-                [0, 0, 1],
-            ],
-            [
-                [0, 0, 1],
-                [0, 1, 0],
-                [1, 0, 0],
-            ],
-        ],
-    )
-)
-
-
-CURRENT_GAME = {}
-
-
 @app.route("/create", methods=["GET", "POST"])
 @login_required
 def create():
     if request.method == "GET":
-        return """
-                <p>Enter the grid size</p>
-                 <form action="" method="POST">
-                 <input type="number" name="size"></input>
-                </form>
-               """
-    return render_template("create.html", value=int(request.form["size"]))
+        return render_template("create-size.html")
+    return render_template("create.html", size=int(request.form["size"]))
 
 
 @app.route("/train")
@@ -166,6 +132,13 @@ def play():
     )
 
 
+@app.route("/games")
+@login_required
+def games():
+    user_games = UserGame.query.filter_by(user_id=current_user.get_id()).all()
+    return render_template("my_games.html", game_list=user_games)
+
+
 @app.route("/replay", methods=["GET"])
 @login_required
 def replay():
@@ -173,8 +146,8 @@ def replay():
     uid = current_user.get_id()
     user_game = UserGame.query.filter_by(id=game_id, user_id=uid).all()
     if not user_game:
-        flash("Game not found")
-        redirect(url_for("games"))
+        flash("Game not found.", "warning")
+        return redirect(url_for("games"))
     user_game = user_game[0]
     with open("shapes/" + user_game.path, "rb") as f:
         shapes = pickle.load(f)
