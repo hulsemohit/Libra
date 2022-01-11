@@ -3,5 +3,38 @@
 {% block content %}
 
 <h1 class="display-1 text-center">Libra</h1>
+<blockquote class="blockquote text-center">
+  <p>An intelligent opponent powered by AlphaZero.</p>
+</blockquote>
+
+<div class="container row">
+    <div class="card col col-4 mx-auto p-0 my-3 shadow">
+        <img src="{{ url_for('static', filename='home-1.jpg') }}" class="card-img-top" alt="remember">
+        <div class="card-body">
+            <h5 class="card-title">Design</h5>
+            <p class="card-text">
+                Pick a board size and create some winning shapes. Be creative!
+            </p>
+        </div>
+    </div>
+    <div class="card col col-4 mx-auto p-0 shadow" >
+        <img src="{{ url_for('static', filename='home-2.gif') }}" class="card-img-top" alt="remember">
+        <div class="card-body col">
+            <h5 class="card-title">Train</h5>
+            <p class="card-text">
+                Libra trains to play your newly created game using Deep Reinforcement Learning.
+            </p>
+        </div>
+    </div>
+    <div class="card col col-4 mx-auto p-0 my-3 shadow">
+        <img src="{{ url_for('static', filename='home-3.jpg') }}" class="card-img-top" alt="remember">
+        <div class="card-body">
+            <h5 class="card-title">Play</h5>
+            <p class="card-text">
+                See how you fare against the computer. Will Libra beat you at your own game?
+            </p>
+        </div>
+    </div>
+</div>
 
 {% endblock %}

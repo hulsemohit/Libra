@@ -2,12 +2,13 @@
 {% block content %}
 
 
+<h1 class="text-center display-4"> {{ current_user.username }}&#39;s Games </h1>
 
-<div class="row justify-content-center"> 
+<div class="container fluid row justify-content-center"> 
     <div class="card col col-5">
-        <img src="{{ url_for('static', filename='save-icon.png') }}" class="card-img-top p-1" alt="remember">
-        <div class="card-body">
-            <h5 class="card-title">Recall, Reuse, Replay<h5>
+        <img src="{{ url_for('static', filename='save-icon.png') }}" class="card-img-top p-3" alt="remember">
+        <div class="card-body p-1">
+            <h5 class="card-title">Recall, Reuse, Replay</h5>
             <h6 class="card-subtitle mb-2 text-muted">Revisit old games</h6>
             <p class="card-text">
                 Libra remembers all games you created.
@@ -22,7 +23,6 @@
     </div>
 
     <div class="col col-7">
-        <h1 class="text-center"> {{ current_user.username }}&#39;s Games </h1>
         {% if game_list %}
         <table class="table table-striped table-hover text-center border align-middle">
             <thead>

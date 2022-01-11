@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h1 class="display-1 text-center">Libra</h1>
+
+<p class="lead">
+Libra is an AlphaZero-based engine that uses the AlphaZero algorithm to
+train an intelligent bot to play a user-defined game.
+</p>
+
+<p>
+In recent years, massive strides have been made in the field of Artificial
+Intelligence with computers being able to do tasks hitherto unimagined. One
+of the most popular domains is the game of chess, where different approaches
+have been applied with great success. Since Deep Blue defeated the World
+Chess Champion in 1997, techniques of increasing sophistication along with
+human expertise and specially tailored algorithms have created some of the
+strongest chess engines that far outmatch humans.
+</p>
+
+<p>
+In 2017, the DeepMind team developed the AlphaZero algorithm, which starts
+tabula rasa - with no prior human expertise - and uses deep reinforcement
+learning through self-play. With just 24 hours of training, AlphaZero was able
+to convincingly defeat the world champion chess engine (and even in games like
+Shogi and Go too!). AlphaZero uses the general Monte Carlo Tree Search
+algorithm in conjunction with a deep neural network to find the best move at
+each position. This approach is extremely general, and can be applied to a
+variety of games and scenarios.
+</p>
+<p>
+The game we chose is a variant of tic-tac-toe namely Harary’s generalized
+tic-tac-toe. Like tic-tac- toe, each player’s objective is to form a certain
+pattern by taking turns to place tokens in a grid. The twist, however, is that
+we let the user choose the pattern, in exchange for Libra playing first. After
+training with this pattern, the newly trained bot challenges the user to a
+match. Can Libra beat you at your own game? Play to find out and make your way
+to the top of the leaderboard!
+</p>
+
+
+{% endblock %}
